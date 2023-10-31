@@ -1,8 +1,3 @@
-<?php
-include './db.class.php';
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,53 +7,8 @@ include './db.class.php';
     <title>Fernando</title>
 </head>
 <body>
+  <h3>Bem vindo ao sistema academico</h3>
+  <a href="paginas/AlunoList.php">Aluno</a><br>
 
-
-<?php
-    $db = new DB();
-    $db->conn();
-
-    $dados = $db->select("aluno");
-   
-    $dadosAluno = ['nome' => "fernando",
-            'cpf' => "12426305975 ",
-            'telefone' => "49991500604", ];
-
-
-
-            //$db->insert("aluno", $dadosAluno);
-    //var_dump($dados);
-        
-    
-
-
-?>
-
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">ID</th>
-      <th scope="col">Nome</th>
-      <th scope="col">CPF</th>
-      <th scope="col">Telefone</th>
-    </tr>
-  </thead>
-  <tbody>
-  <?php
-   foreach ($dados as $item){
-    echo "<tr>";
-    echo "<th scope='row'>$item->id</th>";
-    echo "<td>$item->nome </td>";
-    echo "<td>$item->cpf </td>";
-    echo "<td>$item->telefone </td>";
-    echo "<tr>";
-    
-}
-  
-  ?>
-  </tbody>
-</table>
-
-    
 </body>
 </html>

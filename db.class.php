@@ -35,6 +35,17 @@ try {
 
         return $st->fetchAll(PDO::FETCH_CLASS);
     }
+
+    public function find($nome_tabela){
+        $conn = $this->conn();
+        $sql = "SELECT * FROM $nome_tabela WHERE id = ?";
+
+        $st = $conn->prepare($sql);
+        $st->execute();
+
+        return $st->fetchObject();
+    }
+
     public function insert($nome_tabela, $dados){
         $conn = $this->conn();
         $sql = "INSERT INTO $nome_tabela(nome, cpf, telefone) 
@@ -46,8 +57,43 @@ try {
             $dados['cpf'],  
             $dados['telefone'],
         ]);
-            
+    }
+
+    public function update($nome_tabela, $dados){
+        $conn = $this->conn();
+        $sql = "UPDATE $nome_tabela SET nome=?, cpf=?, telefone=?, WHERE id=? "; 
+        $st = $conn->prepare($sql);
+        $st->execute([
+            $dados['nome'],
+            $dados['cpf'],  
+            $dados['telefone'],
+        ]);
+    }
+
+    
+        public function destroy($nome_tabela, $id){
+            $conn = $this->conn();
+            $sql = "DELETE FROM $nome_tabela where id = ?";
+    
+            $st = $conn->prepare($sql);
+            $st->execute([$id]);
 
     }
+
+    public function search($nome_tabela, $dados){
+        $campo = $dados['tipo'];
+        $valor = $dados['valor'];
+
+
+
+        $conn = $this->conn();
+        $sql = "SELECT * FROM $nome_tabela where $campo LIKE ?";
+
+        $st = $conn->prepare($sql);
+        $st->execute(["%$valor%"]);
+        
+        return $st->fetchAll(PDO::FETCH_CLASS);
 }   
+
+}
 ?>
